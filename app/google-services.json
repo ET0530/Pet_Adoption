@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "932695671",
+    "project_id": "chat-dea22",
+    "storage_bucket": "chat-dea22.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:932695671:android:d1dbee96fde6b00f99c072",
+        "android_client_info": {
+          "package_name": "my.edu.utar.petadoption"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIB_0UjH6Rqcw23mYsDZcIcprhTWig1bM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
