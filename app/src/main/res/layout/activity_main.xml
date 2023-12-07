@@ -24,22 +24,13 @@
             android:layout_height="match_parent" />
     </LinearLayout>
 
-    <ScrollView
+    <!-- RecyclerView for displaying posts -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewPosts"
         android:layout_width="match_parent"
-        android:layout_height="600dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="564dp"
+        android:layout_marginTop="16dp"
+        android:padding="16dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,6 +41,7 @@
             android:id="@+id/imageButton"
             android:layout_width="105dp"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:contentDescription="HomePage"
             android:scaleType="fitCenter"
             android:src="@drawable/home" />
@@ -58,6 +50,7 @@
             android:id="@+id/imageButton2"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:contentDescription="WriteANewPost"
             android:scaleType="fitCenter"
             android:src="@drawable/write_post" />
@@ -66,6 +59,7 @@
             android:id="@+id/imageButton3"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:contentDescription="Comment with others"
             android:scaleType="fitCenter"
             android:src="@drawable/comment" />
@@ -74,6 +68,7 @@
             android:id="@+id/imageButton4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:contentDescription="UserProfile"
             android:scaleType="fitCenter"
             android:src="@drawable/user_profile" />
