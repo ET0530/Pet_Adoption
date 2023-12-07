@@ -1,4 +1,4 @@
-package my.edu.utar.petadoption;
+package my.edu.utar.petadoption.activities;
 
 import android.net.Uri;
 

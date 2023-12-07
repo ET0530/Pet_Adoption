@@ -1,4 +1,4 @@
-package my.edu.utar.petadoption;
+package my.edu.utar.petadoption.activities;
 
 import android.Manifest;
 import android.graphics.drawable.BitmapDrawable;
@@ -29,6 +29,8 @@ import androidx.core.content.ContextCompat;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import my.edu.utar.petadoption.R;
 
 
 public class WriteNewPost extends AppCompatActivity {
