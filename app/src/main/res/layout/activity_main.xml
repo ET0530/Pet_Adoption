@@ -44,7 +44,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="HomePage"
             android:scaleType="fitCenter"
-            android:src="@drawable/home" />
+            android:src="@drawable/ic_home" />
 
         <ImageButton
             android:id="@+id/imageButton2"
@@ -53,7 +53,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="WriteANewPost"
             android:scaleType="fitCenter"
-            android:src="@drawable/write_post" />
+            android:src="@drawable/ic_write_post" />
 
         <ImageButton
             android:id="@+id/imageButton3"
@@ -62,7 +62,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="Comment with others"
             android:scaleType="fitCenter"
-            android:src="@drawable/comment" />
+            android:src="@drawable/ic_chat" />
 
         <ImageButton
             android:id="@+id/imageButton4"
@@ -71,7 +71,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="UserProfile"
             android:scaleType="fitCenter"
-            android:src="@drawable/user_profile" />
+            android:src="@drawable/ic_userprofile" />
     </LinearLayout>
 
 </LinearLayout>
