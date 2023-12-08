@@ -32,7 +32,7 @@ import my.edu.utar.petadoption.models.User;
 import my.edu.utar.petadoption.utilities.Constants;
 import my.edu.utar.petadoption.utilities.PreferenceManager;
 
-public class ChatSpace extends AppCompatActivity implements ConversionListener {
+public class ChatSpace extends BaseActivity implements ConversionListener {
 
     private ActivityChatSpaceBinding binding;
     private PreferenceManager preferenceManager;
@@ -136,6 +136,7 @@ public class ChatSpace extends AppCompatActivity implements ConversionListener {
     }
 
     private void updateToken(String token){
+        preferenceManager.putString(Constants.KEY_FCM_TOKEN, token);
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         DocumentReference documentReference =
                 database.collection(Constants.KEY_COLLECTION_USERS).document(

@@ -1,6 +1,5 @@
 package my.edu.utar.petadoption.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +18,7 @@ import my.edu.utar.petadoption.models.User;
 import my.edu.utar.petadoption.utilities.Constants;
 import my.edu.utar.petadoption.utilities.PreferenceManager;
 
-public class UsersActivity extends AppCompatActivity implements UserListener {
+public class UsersActivity extends BaseActivity implements UserListener {
 
     private ActivityUsersBinding binding;
     private PreferenceManager preferenceManager;
