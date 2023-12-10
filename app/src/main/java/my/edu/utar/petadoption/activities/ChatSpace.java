@@ -1,8 +1,5 @@
 package my.edu.utar.petadoption.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -64,6 +61,18 @@ public class ChatSpace extends BaseActivity implements ConversionListener {
         binding.imageSignOut.setOnClickListener(v -> signOut());
         binding.fabNewChat.setOnClickListener(v ->
                 startActivity(new Intent(getApplicationContext(), UsersActivity.class)));
+        binding.imageButton.setOnClickListener(v->{
+            Intent intent = new Intent(ChatSpace.this, MainActivity.class);
+            startActivity(intent);
+        });
+        binding.imageButton2.setOnClickListener(v->{
+            Intent intent = new Intent(ChatSpace.this, WriteNewPost.class);
+            startActivity(intent);
+        });
+        binding.imageButton4.setOnClickListener(v->{
+            Intent intent = new Intent(ChatSpace.this, UserProfile.class);
+            startActivity(intent);
+        });
     }
 
     private void loadUserDetails(){

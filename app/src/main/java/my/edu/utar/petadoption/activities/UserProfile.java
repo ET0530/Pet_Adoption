@@ -52,6 +52,19 @@ public class UserProfile extends BaseActivity {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             pickImage.launch(intent);
         });
+
+        binding.imageButton.setOnClickListener(v->{
+            Intent intent = new Intent(UserProfile.this, MainActivity.class);
+            startActivity(intent);
+        });
+        binding.imageButton2.setOnClickListener(v->{
+            Intent intent = new Intent(UserProfile.this, WriteNewPost.class);
+            startActivity(intent);
+        });
+        binding.imageButton3.setOnClickListener(v->{
+            Intent intent = new Intent(UserProfile.this, ChatSpace.class);
+            startActivity(intent);
+        });
     }
 
     private void signOut(){
@@ -141,4 +154,6 @@ public class UserProfile extends BaseActivity {
                 .update(user);
         showToast("Saved");
     }
+
+
 }

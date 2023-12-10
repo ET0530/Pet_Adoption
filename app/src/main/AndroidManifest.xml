@@ -42,10 +42,12 @@
             android:name=".activities.WriteNewPost"
             android:exported="false"
             android:label="Write New Post"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activities.UserProfile"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activities.ChatActivity"
             android:exported="false"
@@ -67,7 +69,6 @@
         <activity
             android:name=".activities.MainActivity"
             android:exported="false" />
-
         <service
             android:name=".firebase.MessagingService"
             android:exported="false">

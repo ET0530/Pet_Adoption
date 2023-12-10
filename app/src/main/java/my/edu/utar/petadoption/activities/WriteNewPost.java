@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import my.edu.utar.petadoption.R;
+import my.edu.utar.petadoption.databinding.ActivityWriteNewPostBinding;
 import my.edu.utar.petadoption.models.Post;
 
 
@@ -51,16 +52,20 @@ public class WriteNewPost extends AppCompatActivity {
     ImageView imageIv;
     Button uploadBtn;
     Uri imageUri = null;
+    private ActivityWriteNewPostBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_new_post);
 
+        binding = ActivityWriteNewPostBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Add New Post");
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        setListeners();
 
         cameraPermissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -98,6 +103,7 @@ public class WriteNewPost extends AppCompatActivity {
                         }
                     }
                 });
+
 
         // get image from camera/gallery on click
         imageIv.setOnClickListener(new View.OnClickListener() {
@@ -162,6 +168,25 @@ public class WriteNewPost extends AppCompatActivity {
                 setResult(RESULT_OK, resultIntent);
                 finish();
             }
+        });
+    }
+
+    private void setListeners(){
+        binding.imageButton.setOnClickListener(v->{
+            try {
+                Intent intent = new Intent(WriteNewPost.this, MainActivity.class);
+                startActivityForResult(intent,1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        binding.imageButton3.setOnClickListener(v->{
+            Intent intent = new Intent(WriteNewPost.this, ChatSpace.class);
+            startActivity(intent);
+        });
+        binding.imageButton4.setOnClickListener(v->{
+            Intent intent = new Intent(WriteNewPost.this, UserProfile.class);
+            startActivity(intent);
         });
     }
 

@@ -1,17 +1,16 @@
 package my.edu.utar.petadoption.activities;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.ImageButton;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
-import android.view.View;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,28 +42,19 @@ public class MainActivity extends AppCompatActivity {
         ImageButton btn_chat = findViewById(R.id.imageButton3);
         ImageButton user_profile = findViewById(R.id.imageButton4);
 
-        btn_chat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ChatSpace.class);
-                startActivity(intent);
-            }
+        btn_chat.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ChatSpace.class);
+            startActivity(intent);
         });
 
-        postButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, WriteNewPost.class);
-                startActivityForResult(intent, USER_REQUEST_CODE);
-            }
+        postButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, WriteNewPost.class);
+            startActivityForResult(intent, USER_REQUEST_CODE);
         });
 
-        user_profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, UserProfile.class);
-                startActivity(intent);
-            }
+        user_profile.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, UserProfile.class);
+            startActivity(intent);
         });
 
         RecyclerView recyclerView = findViewById(R.id.recyclerViewPosts);

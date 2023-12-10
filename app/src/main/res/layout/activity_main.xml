@@ -5,6 +5,7 @@
     android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary"
     android:orientation="vertical"
     tools:context=".activities.MainActivity">
 
@@ -15,12 +16,12 @@
         android:id="@+id/recyclerViewPosts"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="-20dp"
+        android:layout_marginStart="-10dp"
         android:layout_marginTop="-17dp"
-        android:layout_marginEnd="-20dp"
+        android:layout_marginEnd="-10dp"
         android:layout_marginBottom="-17dp"
         android:padding="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNevigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +32,7 @@
         android:id="@+id/textView2"
         android:layout_width="0dp"
         android:layout_height="63dp"
-        android:background="@color/secondary"
+        android:background="@color/white"
         android:gravity="center"
         android:src="@drawable/app_logo"
         android:text="Stray"
@@ -40,12 +41,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomNevigation"
         android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:background="@color/secondary"
-        android:orientation="horizontal"
+        android:layout_height="60dp"
+        android:background="@color/background"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,40 +54,57 @@
 
         <ImageButton
             android:id="@+id/imageButton"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="@android:color/transparent"
             android:contentDescription="HomePage"
-            android:scaleType="fitCenter"
-            android:src="@drawable/home" />
+            android:scaleType="centerInside"
+            android:src="@drawable/home"
+            app:tint="#2F4B70"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
+            app:layout_constraintEnd_toStartOf="@+id/imageButton2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageButton2" />
 
         <ImageButton
             android:id="@+id/imageButton2"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="@android:color/transparent"
             android:contentDescription="WriteANewPost"
-            android:scaleType="fitCenter"
-            android:src="@drawable/write_post" />
+            android:scaleType="centerInside"
+            android:src="@drawable/write_post"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButton3"
+            app:layout_constraintEnd_toStartOf="@+id/imageButton3"
+            app:layout_constraintStart_toEndOf="@+id/imageButton"
+            app:layout_constraintTop_toTopOf="@+id/imageButton3" />
 
         <ImageButton
             android:id="@+id/imageButton3"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="@android:color/transparent"
             android:contentDescription="Comment with others"
             android:padding="4dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/comment" />
+            android:scaleType="centerInside"
+            android:src="@drawable/comment"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButton4"
+            app:layout_constraintEnd_toStartOf="@+id/imageButton4"
+            app:layout_constraintStart_toEndOf="@+id/imageButton2"
+            app:layout_constraintTop_toTopOf="@+id/imageButton4" />
 
         <ImageButton
             android:id="@+id/imageButton4"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="@android:color/transparent"
             android:contentDescription="UserProfile"
-            android:scaleType="fitCenter"
-            android:src="@drawable/user_profile" />
-    </LinearLayout>
+            android:scaleType="centerInside"
+            android:src="@drawable/user_profile"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageButton3"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
