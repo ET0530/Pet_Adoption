@@ -11,9 +11,6 @@ import android.widget.Toast;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-
-import my.edu.utar.petadoption.activities.MainActivity;
 import my.edu.utar.petadoption.databinding.ActivitySignInBinding;
 import my.edu.utar.petadoption.utilities.Constants;
 import my.edu.utar.petadoption.utilities.PreferenceManager;
