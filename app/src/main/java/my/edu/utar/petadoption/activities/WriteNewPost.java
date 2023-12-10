@@ -1,19 +1,14 @@
 package my.edu.utar.petadoption.activities;
 
 import android.Manifest;
-import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.TextUtils;
+import android.util.Base64;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,20 +16,23 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import java.io.OutputStream;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import my.edu.utar.petadoption.R;
 import my.edu.utar.petadoption.databinding.ActivityWriteNewPostBinding;
 import my.edu.utar.petadoption.models.Post;
+import my.edu.utar.petadoption.utilities.Constants;
+import my.edu.utar.petadoption.utilities.PreferenceManager;
 
 
 public class WriteNewPost extends AppCompatActivity {
@@ -53,6 +51,10 @@ public class WriteNewPost extends AppCompatActivity {
     Button uploadBtn;
     Uri imageUri = null;
     private ActivityWriteNewPostBinding binding;
+    private String encodedImage;
+    HashMap<String, Object> post = new HashMap<>();
+    FirebaseFirestore database = FirebaseFirestore.getInstance();
+    private PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,8 @@ public class WriteNewPost extends AppCompatActivity {
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(false);
         setListeners();
+
+        preferenceManager = new PreferenceManager(getApplicationContext());
 
         cameraPermissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -103,8 +107,89 @@ public class WriteNewPost extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void showToast(String message){
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+    private void setListeners(){
+        binding.imageButton3.setOnClickListener(v->{
+            Intent intent = new Intent(WriteNewPost.this, MainActivity.class);
+            startActivity(intent);
+        });
+        binding.imageButton3.setOnClickListener(v->{
+            Intent intent = new Intent(WriteNewPost.this, ChatSpace.class);
+            startActivity(intent);
+        });
+        binding.imageButton4.setOnClickListener(v->{
+            Intent intent = new Intent(WriteNewPost.this, UserProfile.class);
+            startActivity(intent);
+        });
+
+        binding.pImageIv.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            pickImage.launch(intent);
+        });
+
+        binding.pUploadBtn.setOnClickListener(v -> {
+            Posts();
+        });
+    }
+
+    private String encodeImage(Bitmap bitmap){
+        int previewWidth = 150;
+        int previewHeight = bitmap.getHeight() * previewWidth / bitmap.getWidth();
+        Bitmap previewBitmap = Bitmap.createScaledBitmap(bitmap, previewWidth, previewHeight,false);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        previewBitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+        byte[] bytes = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
+    }
+
+    private final ActivityResultLauncher<Intent> pickImage = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result ->{
+                if (result.getResultCode() == RESULT_OK){
+                    if(result.getData() != null){
+                        Uri imageUrl = result.getData().getData();
+                        try {
+                            InputStream inputStream = getContentResolver().openInputStream(imageUrl);
+                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                            binding.pImageIv.setImageBitmap(bitmap);
+                            encodedImage = encodeImage(bitmap);
+                        }catch (FileNotFoundException e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+    );
+
+    private void Posts(){
+        post.put(Constants.KEY_POST_TITLE,binding.pTitleEt.getText().toString());
+        post.put(Constants.KEY_POST_DESCRIPTIONS, binding.pDescriptionEt.getText().toString());
+        post.put(Constants.KEY_POSTER_EMAIL, binding.pBirthEt.getText().toString());
+        post.put(Constants.KEY_POST_GENDER, binding.pGenderEt.getText().toString());
+        post.put(Constants.KEY_POSTER_CONTACT, binding.pContactEt.getText().toString());
+        post.put(Constants.KEY_POST_IMAGE, encodedImage);
+        post.put(Constants.KEY_USER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
+        database.collection(Constants.KEY_COLLECTION_POST)
+                .add(post)
+                .addOnSuccessListener(documentReference -> {
+                    showToast("Saved");
+                    Intent intent = new Intent(WriteNewPost.this, MainActivity.class);
+                    startActivity(intent);
+                })
+                .addOnFailureListener(exception -> {
+                    showToast(exception.getMessage());
+                });
+
+    }
 
 
+
+/*
         // get image from camera/gallery on click
         imageIv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,25 +256,9 @@ public class WriteNewPost extends AppCompatActivity {
         });
     }
 
-    private void setListeners(){
-        binding.imageButton.setOnClickListener(v->{
-            try {
-                Intent intent = new Intent(WriteNewPost.this, MainActivity.class);
-                startActivityForResult(intent,1);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-        binding.imageButton3.setOnClickListener(v->{
-            Intent intent = new Intent(WriteNewPost.this, ChatSpace.class);
-            startActivity(intent);
-        });
-        binding.imageButton4.setOnClickListener(v->{
-            Intent intent = new Intent(WriteNewPost.this, UserProfile.class);
-            startActivity(intent);
-        });
-    }
 
+
+    /*
     private void saveImageLocally(String title, String description) {
         try {
             ContentValues values = new ContentValues();
@@ -288,6 +357,7 @@ public class WriteNewPost extends AppCompatActivity {
     }
 
     @Override
+
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
@@ -304,6 +374,10 @@ public class WriteNewPost extends AppCompatActivity {
         }
     }
 
+
+
+
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 

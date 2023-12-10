@@ -37,7 +37,9 @@ public class Constants {
     public static final String KEY_POST_ID = "postId";
     public static final String KEY_POST_NAME = "postName";
     public static final String KEY_POSTER_EMAIL = "posterEmail";
+    public static final String KEY_POSTER_CONTACT = "posterContact";
     public static final String KEY_POST_TITLE = "postTitle";
+    public static final String KEY_POST_GENDER = "postGender";
     public static final String KEY_POST_DESCRIPTIONS = "descriptions";
     public static final String KEY_POST_IMAGE = "postImage";
 
