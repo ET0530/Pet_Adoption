@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "236511138783",
+    "project_id": "postfirebase-fec97",
+    "firebase_url": "https://postfirebase-fec97-default-rtdb.asia-southeast1.firebasedatabase.app/",
+    "storage_bucket": "postfirebase-fec97.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:236511138783:android:405d21e18bff807ba06a6a",
+        "android_client_info": {
+          "package_name": "my.edu.utar.petadoption"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAR9X4Q5bNiUTpyyJR6GnUgDK1_aMNYfhM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

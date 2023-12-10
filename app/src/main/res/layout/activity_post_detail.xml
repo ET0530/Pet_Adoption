@@ -1,62 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/primary"
     android:padding="16dp">
 
-    <ImageView
-        android:id="@+id/pImageIv"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="200dp" />
+        android:orientation="vertical"
+        android:background="@drawable/rounded_post">
 
-    <EditText
-        android:id="@+id/pTitleEt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:background="@null"
-        android:focusable="false"
-        android:inputType="none"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/pImageIv"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="200dp"
+            android:background="@drawable/rounded_detail_post"
+            android:scaleType="centerCrop"/>
 
-    <EditText
-        android:id="@+id/pDescriptionEt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:focusable="false"
-        android:inputType="none" />
+        <EditText
+            android:id="@+id/pTitleEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@null"
+            android:focusable="false"
+            android:inputType="none"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:padding="10dp"/>
 
-    <EditText
-        android:id="@+id/pBirthEt"
-        android:background="@color/white"
-        android:padding="10dp"
-        android:hint="Birth date"
-        android:singleLine="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/pDescriptionEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textSize="20sp"
+            android:background="@null"
+            android:focusable="false"
+            android:inputType="none"
+            android:padding="10dp"/>
 
-    <EditText
-        android:id="@+id/pGenderEt"
-        android:background="@color/white"
-        android:padding="10dp"
-        android:hint="Gender"
-        android:singleLine="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/birthTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pet Age"
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:textSize="25sp"/>
 
-    <EditText
-        android:id="@+id/pCharacteristicsEt"
-        android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:background="@color/white"
-        android:gravity="start"
-        android:hint="Characteristics"
-        android:inputType="textCapSentences|textMultiLine"
-        android:minHeight="120dp"
-        android:padding="10dp" />
+        <EditText
+            android:id="@+id/pBirthEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:inputType="none"
+            android:focusable="false"
+            android:layout_marginBottom="8dp"
+            android:textSize="20sp"
+            android:padding="5dp"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/genderTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pet Gender"
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:textSize="25sp" />
+
+        <EditText
+            android:id="@+id/pGenderEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:inputType="none"
+            android:focusable="false"
+            android:layout_marginBottom="8dp"
+            android:textSize="20sp"
+            android:singleLine="true"
+            android:padding="5dp"/>
+
+        <TextView
+            android:id="@+id/contactTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Contact No."
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:textSize="25sp"/>
+
+        <EditText
+            android:id="@+id/pContactEt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:inputType="none"
+            android:focusable="false"
+            android:layout_marginBottom="8dp"
+            android:cursorVisible="false"
+            android:textSize="20sp"
+            android:padding="5dp"
+            android:singleLine="true"/>
+
+    </LinearLayout>
 
 </LinearLayout>

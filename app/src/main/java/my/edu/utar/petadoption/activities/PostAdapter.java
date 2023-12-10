@@ -1,5 +1,6 @@
 package my.edu.utar.petadoption.activities;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     private List<Post> posts;
     private OnPostClickListener onPostClickListener;
-
     public PostAdapter(List<Post> posts, OnPostClickListener onPostClickListener) {
         this.posts = posts;
         this.onPostClickListener = onPostClickListener;
@@ -33,20 +33,23 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         Post post = posts.get(position);
 
+        // Add this log
+        Log.d("GlideDebug", "Image URL: " + post.getImageUri());
+
         holder.titleEt.setText(post.getTitle());
         holder.descriptionEt.setText(post.getContent());
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle click event to open PostDetailActivity
-                onPostClickListener.onPostClick(position);
-            }
-        });
 
         Glide.with(holder.itemView.getContext())
                 .load(post.getImageUri())
                 .into(holder.imageIv);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // to access details of the post
+                onPostClickListener.onPostClick(position);
+            }
+        });
     }
 
     @Override
@@ -72,15 +75,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         @Override
         public void onClick(View v) {
-            // Handle the click event and pass the clicked position to the interface method
             if (onPostClickListener != null) {
                 onPostClickListener.onPostClick(getAdapterPosition());
             }
         }
     }
 
-    // Interface to handle click events
     public interface OnPostClickListener {
         void onPostClick(int position);
     }
+
+
 }

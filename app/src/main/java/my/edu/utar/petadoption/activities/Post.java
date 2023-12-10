@@ -2,41 +2,96 @@ package my.edu.utar.petadoption.activities;
 
 import android.net.Uri;
 
-public class Post {
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.ServerValue;
+
+import java.io.Serializable;
+
+public class Post implements Serializable {
+
+    private String postKey;
     private String title;
     private String content;
     private Uri imageUri;
     private String birth;
     private String gender;
-    private String characteristics;
+    private String contact;
+    private transient Object timeStamp;
 
-    public Post(String title, String content, Uri imageUri, String birth, String gender, String characteristics) {
+    public Post () {
+    }
+    public Post(String title, String content, Uri imageUri, String birth, String gender, String contact) {
         this.title = title;
         this.content = content;
         this.imageUri = imageUri;
         this.birth = birth;
         this.gender = gender;
-        this.characteristics = characteristics;
+        this.contact = contact;
+        this.timeStamp = ServerValue.TIMESTAMP;
     }
 
+    // logcat verification purpose
+    public String toString() {
+        return "Post{" +
+                "postKey='" + postKey + '\'' +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", imageUri=" + imageUri +
+                ", birth='" + birth + '\'' +
+                ", gender='" + gender + '\'' +
+                ", contact='" + contact + '\'' +
+                ", timeStamp=" + timeStamp +
+                '}';
+    }
+    public String getPostKey() {
+        return postKey;
+    }
+    public void setPostKey(String postKey) {
+        this.postKey = postKey;
+    }
     public String getTitle() {
+
         return title;
     }
     public String getContent() {
+
         return content;
     }
+
+    @Exclude
     public Uri getImageUri() {
+
         return imageUri;
     }
+
+    public void setImageUri(Uri imageUri) {
+        this.imageUri = imageUri;
+    }
     public String getBirth() {
+
         return birth;
     }
-
     public String getGender() {
+
         return gender;
     }
+    public String getContact() {
 
-    public String getCharacteristics() {
-        return characteristics;
+        return contact;
+    }
+    public Object getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Object timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent (String content) {
+        this.content = content;
     }
 }

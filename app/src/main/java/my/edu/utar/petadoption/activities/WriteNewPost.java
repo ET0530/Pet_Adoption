@@ -12,20 +12,22 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,24 +37,16 @@ import my.edu.utar.petadoption.R;
 
 public class WriteNewPost extends AppCompatActivity {
 
-    // permissions constants
     private static final int CAMERA_REQUEST_CODE = 100;
     private static final int STORAGE_REQUEST_CODE = 200;
-
-    // image pick constants
     private static final int IMAGE_PICK_CAMERA_CODE = 300;
     private static final int IMAGE_PICK_GALLERY_CODE = 400;
-
-    ActivityResultLauncher<Intent> activityLauncher;
     private List<Post> posts = new ArrayList<>();
     private PostAdapter postAdapter;
-
-    // permissions array
+    ActivityResultLauncher<Intent> activityLauncher;
     String[] cameraPermissions;
     String[] storagePermissions;
-
-    //views
-    EditText titleEt, descriptionEt, birthEt, genderEt, characteristicsEt;
+    EditText titleEt, descriptionEt, birthEt, genderEt, contactEt;
     ImageView imageIv;
     Button uploadBtn;
     Uri imageUri = null;
@@ -67,18 +61,16 @@ public class WriteNewPost extends AppCompatActivity {
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        // initialize permissions arrays
         cameraPermissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
-        // initialize views
         titleEt = findViewById(R.id.pTitleEt);
         descriptionEt = findViewById(R.id.pDescriptionEt);
         imageIv = findViewById(R.id.pImageIv);
         uploadBtn = findViewById(R.id.pUploadBtn);
         birthEt = findViewById(R.id.pBirthEt);
         genderEt = findViewById(R.id.pGenderEt);
-        characteristicsEt = findViewById(R.id.pCharacteristicsEt);
+        contactEt = findViewById(R.id.pContactEt);
 
         posts = new ArrayList<>();
         postAdapter = new PostAdapter(posts, null);
@@ -89,21 +81,18 @@ public class WriteNewPost extends AppCompatActivity {
                     if (result.getResultCode() == RESULT_OK) {
                         Intent data = result.getData();
                         if (data != null) {
-                            // Handle the result data here
+
                             String title = data.getStringExtra("title");
                             String description = data.getStringExtra("content");
                             imageUri = Uri.parse(data.getStringExtra("imageUri"));
                             String birth = data.getStringExtra("birth");
                             String gender = data.getStringExtra("gender");
-                            String characteristics = data.getStringExtra("characteristics");
+                            String contact = data.getStringExtra("contact");
 
-                            // Create a new Post object with the retrieved data
-                            Post newPost = new Post(title, description, imageUri, birth, gender, characteristics);
+                            Post newPost = new Post(title, description, imageUri, birth, gender, contact);
 
-                            // Add the new post to the posts list
-                            posts.add(0, newPost); // Add at the beginning of the list to show the newest post first
+                            posts.add(0, newPost); // add new post on top of previous post
 
-                            // Notify the adapter that the data has changed
                             postAdapter.notifyDataSetChanged();
                         }
                     }
@@ -113,7 +102,6 @@ public class WriteNewPost extends AppCompatActivity {
         imageIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // show image pick dialog
                 showImagePickDialog();
             }
         });
@@ -122,43 +110,53 @@ public class WriteNewPost extends AppCompatActivity {
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // get data (title, description) from EditTexts
+
                 String title = titleEt.getText().toString().trim();
                 String description = descriptionEt.getText().toString().trim();
                 String birth = birthEt.getText().toString().trim();
                 String gender = genderEt.getText().toString().trim();
-                String characteristics = characteristicsEt.getText().toString().trim();
+                String contact = contactEt.getText().toString().trim();
 
                 if (TextUtils.isEmpty(title)) {
-                    Toast.makeText(WriteNewPost.this, "Enter title...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WriteNewPost.this, "Enter title", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (TextUtils.isEmpty(description)) {
-                    Toast.makeText(WriteNewPost.this, "Enter description...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WriteNewPost.this, "Enter description", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                // Check if an image is selected
+                if (TextUtils.isEmpty(birth)) {
+                    Toast.makeText(WriteNewPost.this, "Enter pet age", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(gender)) {
+                    Toast.makeText(WriteNewPost.this, "Enter pet gender", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(contact)) {
+                    Toast.makeText(WriteNewPost.this, "Enter contact number", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if (imageUri == null) {
-                    Toast.makeText(WriteNewPost.this, "Select an image...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WriteNewPost.this, "Select an image", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                // Save the image locally
                 saveImageLocally(title, description);
+                Toast.makeText(WriteNewPost.this, "Published", Toast.LENGTH_SHORT).show();
 
-                // Notify the user that the post is saved locally
-                Toast.makeText(WriteNewPost.this, "Post saved", Toast.LENGTH_SHORT).show();
-
-                // upload user input to the new post
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra("title", title);
                 resultIntent.putExtra("content", description);
                 resultIntent.putExtra("imageUri", imageUri.toString());
                 resultIntent.putExtra("birth", birth);
                 resultIntent.putExtra("gender", gender);
-                resultIntent.putExtra("characteristics", characteristics);
+                resultIntent.putExtra("contact", contact);
 
                 setResult(RESULT_OK, resultIntent);
                 finish();
@@ -173,23 +171,16 @@ public class WriteNewPost extends AppCompatActivity {
             values.put(MediaStore.Images.Media.DESCRIPTION, description);
             values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
 
-            // Insert image to the gallery
             imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
-            // Open an OutputStream to the image
             OutputStream outputStream = getContentResolver().openOutputStream(imageUri);
 
-            // Get the drawable from the ImageView
             Drawable drawable = imageIv.getDrawable();
 
-            // Convert the drawable to a Bitmap
             Bitmap yourBitmap = ((BitmapDrawable) drawable).getBitmap();
 
-            // Compress and save the image
             if (yourBitmap != null) {
                 yourBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-
-                // Close the OutputStream
                 outputStream.close();
             } else {
                 Toast.makeText(WriteNewPost.this, "Error: Bitmap is null", Toast.LENGTH_SHORT).show();
@@ -201,16 +192,16 @@ public class WriteNewPost extends AppCompatActivity {
     }
 
     private void showImagePickDialog() {
-        // options (camera, gallery) to show in dialog
+
         String[] options = {"Camera", "Gallery"};
 
-        // dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
         builder.setTitle("Choose image from");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // item click handle
+
                 if (which == 0) {
                     // camera
                     if (!checkCameraPermission()) {
@@ -229,7 +220,6 @@ public class WriteNewPost extends AppCompatActivity {
                 }
             }
         });
-        // create and show dialog
         builder.create().show();
     }
 
@@ -285,6 +275,18 @@ public class WriteNewPost extends AppCompatActivity {
                 // image is captured from camera, set to imageView
                 imageIv.setImageURI(imageUri);
             }
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed(); // back button
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }
