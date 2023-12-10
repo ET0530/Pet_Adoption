@@ -4,6 +4,11 @@
         <item name="colorPrimary">@color/primary</item>
         <item name="android:statusBarColor" tools:targetAPI="l">@color/primary</item>
     </style>
+    <style name="Theme.PetAdoption" parent="Base.Theme.PetAdoption">
+        <!-- Transparent system bars for edge-to-edge. -->
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
+    </style>
 
-    <style name="Theme.PetAdoption" parent="Base.Theme.PetAdoption" />
 </resources>

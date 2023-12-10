@@ -1,9 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+
+ xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary"
     tools:context=".activities.WriteNewPost">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/barrier0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/pTitleEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/_16sdp"
+        android:layout_marginRight="@dimen/_16sdp"
+        android:background="@drawable/rounded_et"
+        android:hint="Enter title"
+        android:padding="@dimen/_14sdp"
+        android:singleLine="true"
+        android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/barrier1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/pDescriptionEt"
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:gravity="start"
+            android:hint="Enter description"
+            android:inputType="textCapSentences|textMultiLine"
+            android:minHeight="120dp"
+            android:textStyle="bold"
+            android:padding="@dimen/_14sdp"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:background="@drawable/rounded_et" />
+
+        <TextView
+            android:id="@+id/barrier2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/pBirthEt"
+            android:hint="Enter pet age"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:padding="@dimen/_14sdp"
+            android:singleLine="true"
+            android:textStyle="bold"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:background="@drawable/rounded_et" />
+
+        <TextView
+            android:id="@+id/barrier3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/pGenderEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter pet gender"
+            android:padding="@dimen/_14sdp"
+            android:textStyle="bold"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:background="@drawable/rounded_et" />
+
+        <TextView
+            android:id="@+id/barrier4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/pContactEt"
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:hint="Enter contact number"
+            android:textStyle="bold"
+            android:padding="@dimen/_14sdp"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:background="@drawable/rounded_et" />
+
+        <TextView
+            android:id="@+id/barrier5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_placeImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:padding="@dimen/_14sdp"
+            android:text="Choose an image:" />
+
+        <ImageView
+            android:id="@+id/pImageIv"
+            android:layout_width="match_parent"
+            android:layout_height="137dp"
+            android:minHeight="100dp"
+            android:padding="@dimen/_14sdp"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:background="@drawable/rounded_et"/>
+
+        <Button
+            android:id="@+id/pUploadBtn"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="Post" />
+
+    </LinearLayout>
+
+
+
+</ScrollView>
