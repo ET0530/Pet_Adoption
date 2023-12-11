@@ -173,6 +173,8 @@ public class ChatSpace extends BaseActivity implements ConversionListener {
                 .addOnFailureListener(e -> showToast("Unable to sign out"));
     }
 
+
+
     @Override
     public void onConversionClicked(User user) {
         Intent intent = new Intent(getApplicationContext(), ChatActivity.class);

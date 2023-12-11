@@ -113,8 +113,12 @@ public class WriteNewPost extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
     private void setListeners(){
-        binding.imageButton3.setOnClickListener(v->{
+        binding.imageButton.setOnClickListener(v->{
             Intent intent = new Intent(WriteNewPost.this, MainActivity.class);
+            startActivity(intent);
+        });
+        binding.imageButton3.setOnClickListener(v->{
+            Intent intent = new Intent(WriteNewPost.this, ChatSpace.class);
             startActivity(intent);
         });
         binding.imageButton4.setOnClickListener(v->{
