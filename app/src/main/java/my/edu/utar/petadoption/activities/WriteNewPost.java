@@ -85,7 +85,7 @@ public class WriteNewPost extends AppCompatActivity {
         posts = new ArrayList<>();
         postAdapter = new PostAdapter(posts, null);
 
-        activityLauncher = registerForActivityResult(
+        /*activityLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK) {
@@ -94,7 +94,7 @@ public class WriteNewPost extends AppCompatActivity {
 
                             String title = data.getStringExtra("title");
                             String description = data.getStringExtra("content");
-                            imageUri = Uri.parse(data.getStringExtra("imageUri"));
+                            String imageUri = data.getStringExtra("imageUri");
                             String birth = data.getStringExtra("birth");
                             String gender = data.getStringExtra("gender");
                             String contact = data.getStringExtra("contact");
@@ -106,7 +106,7 @@ public class WriteNewPost extends AppCompatActivity {
                             postAdapter.notifyDataSetChanged();
                         }
                     }
-                });
+                });*/
     }
 
     private void showToast(String message){

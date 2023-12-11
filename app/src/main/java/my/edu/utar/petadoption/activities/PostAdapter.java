@@ -1,5 +1,8 @@
 package my.edu.utar.petadoption.activities;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +12,6 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -43,16 +44,24 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.titleEt.setText(post.getTitle());
         holder.descriptionEt.setText(post.getContent());
 
-        Glide.with(holder.itemView.getContext())
+        /*Glide.with(holder.itemView.getContext())
                 .load(post.getImageUri())
-                .into(holder.imageIv);
+                .into(holder.imageIv);*/
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               // to access details of the post
-                onPostClickListener.onPostClick(position);
+        if (post.getImageUri() != null) {
+            try {
+                byte[] bytes = Base64.decode(post.getImageUri(), Base64.DEFAULT);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                holder.imageIv.setImageBitmap(bitmap);
+            } catch (Exception e) {
+                Log.e("BitmapDecodeError", "Error decoding bitmap: " + e.getMessage());
+                e.printStackTrace();
             }
+        }
+
+        holder.itemView.setOnClickListener(v -> {
+           // to access details of the post
+            onPostClickListener.onPostClick(position);
         });
     }
 

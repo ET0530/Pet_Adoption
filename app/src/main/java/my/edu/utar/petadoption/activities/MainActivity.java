@@ -1,30 +1,24 @@
 package my.edu.utar.petadoption.activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import my.edu.utar.petadoption.R;
 import my.edu.utar.petadoption.models.Post;
+import my.edu.utar.petadoption.utilities.Constants;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,40 +58,45 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(postAdapter);
 
         retrieveAndDisplayPosts();
+    }
 
-
+    private void showToast(String message){
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     private void retrieveAndDisplayPosts() {
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
 
         List<Post> localPosts = getLocalPosts();
         posts.addAll(localPosts);
 
-        // retrieve posts from Firebase
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Posts");
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                posts.clear();
-
-                posts.addAll(localPosts);
-
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Post post = snapshot.getValue(Post.class);
-                    if (post != null) {
-                        posts.add(post);
+        database.collection(Constants.KEY_COLLECTION_POST)
+                .addSnapshotListener((value, error) -> {
+                    if (error != null) {
+                        Toast.makeText(MainActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        return;
                     }
-                }
-                postAdapter.notifyDataSetChanged();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(MainActivity.this, "Failed to retrieve posts: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                    if (value != null) {
+                        posts.clear();
+
+                        for (DocumentSnapshot snapshot : value) {
+                            String postTitle = (String) snapshot.get("postTitle");
+                            String descriptions = (String) snapshot.get("descriptions");
+                            String postImage = (String) snapshot.get("postImage");
+                            String postGender = (String) snapshot.get("postGender");
+                            String posterContact = (String) snapshot.get("posterContact");
+                            String userId = (String) snapshot.get("userId");
+                            Post post = new Post(postTitle, descriptions, postImage,postImage, postGender, posterContact, userId);
+                            if (post != null) {
+                                posts.add(post);
+                                Log.d("PostDebug", post.toString());
+                            }
+                        }
+
+                        postAdapter.notifyDataSetChanged();
+                    }
+                });
     }
 
     private List<Post> getLocalPosts() {
@@ -106,108 +105,47 @@ public class MainActivity extends AppCompatActivity {
         samplePosts.add(new Post(
                 "Seeking for adopters",
                 "Found this cat near the back of my farm.",
-                Uri.parse("android.resource://my.edu.utar.petadoption/drawable/sample_pic1"),
+                "android.resource://my.edu.utar.petadoption/drawable/sample_pic1",
                 "1 years old",
                 "Male",
-                "012-3456789"
+                "012-3456789",
+                "100"
         ));
 
         samplePosts.add(new Post(
                 "Any adopt volunteers?",
                 "Saw this poor fella lying at this walkway.",
-                Uri.parse("android.resource://my.edu.utar.petadoption/drawable/sample_pic2"),
+                "android.resource://my.edu.utar.petadoption/drawable/sample_pic2",
                 "2 years old",
                 "Female",
-                "011-2345678"
+                "011-2345678",
+                "101"
         ));
 
         samplePosts.add(new Post(
                 "Helping this kitten to find a home",
                 "Encountered this cute kitten while jungle tracking!",
-                Uri.parse("android.resource://my.edu.utar.petadoption/drawable/sample_pic3"),
+                "android.resource://my.edu.utar.petadoption/drawable/sample_pic3",
                 "2 weeks old",
                 "Male",
-                "010-1234567"
+                "010-1234567",
+                "102"
         ));
 
         samplePosts.add(new Post(
                 "Puppy lover don't miss out!",
                 "This puppy was so excited to be adopt, feel free to contact me.",
-                Uri.parse("android.resource://my.edu.utar.petadoption/drawable/sample_pic4"),
+                "android.resource://my.edu.utar.petadoption/drawable/sample_pic4",
                 "2 weeks old",
                 "Male",
-                "010-1234567"
+                "010-1234567",
+                "103"
         ));
 
         return samplePosts;
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK && requestCode == USER_REQUEST_CODE) {
-
-            String title = data.getStringExtra("title");
-            String description = data.getStringExtra("content");
-            String imageUriString = data.getStringExtra("imageUri");
-            String birth = data.getStringExtra("birth");
-            String gender = data.getStringExtra("gender");
-            String contact = data.getStringExtra("contact");
-
-            Uri imageUri = Uri.parse(imageUriString);
-
-            // Upload image to Firebase Storage
-            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("post_images");
-            final StorageReference imageFilePath = storageReference.child(imageUri.getLastPathSegment());
-
-            imageFilePath.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
-
-                imageFilePath.getDownloadUrl().addOnSuccessListener(uri -> {
-
-                    Post newPost = new Post(title, description, imageUri, birth, gender, contact);
-
-                    // Add post to the Realtime Database
-                    addPost(newPost);
-
-                    // Add new post to the local list for display
-                    posts.add(0, newPost);
-                    postAdapter.notifyDataSetChanged();
-
-                    Toast.makeText(MainActivity.this, "Post added successfully", Toast.LENGTH_SHORT).show();
-                }).addOnFailureListener(e -> {
-                    Toast.makeText(MainActivity.this, "Couldn't get image download URL", Toast.LENGTH_SHORT).show();
-                });
-            }).addOnFailureListener(e -> {
-                Toast.makeText(MainActivity.this, "Couldn't upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            });
-        }
-    }
-
-    private void addPost(Post newPost) {
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Posts").push();
-
-        // get post unique ID and update post key
-        String key = myRef.getKey();
-        newPost.setPostKey(key);
-
-        Log.d("FirebaseWrite", "Writing post to database: " + newPost.toString());
-
-        // add post data to firebase database
-        myRef.setValue(newPost).addOnSuccessListener(unused -> {
-            Toast.makeText(MainActivity.this, "Post added successfully", Toast.LENGTH_SHORT).show();
-        }).addOnFailureListener(e -> {
-            Toast.makeText(MainActivity.this, "Failed to add post to database: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-
-            Log.e("FirebaseWrite", "Failed to write post to database: " + e.getMessage());
-        });
     }
 
     public void onPostClick(int position) {
-
         Post selectedPost = posts.get(position);
 
         Intent intent = new Intent(this, PostDetailActivity.class);
@@ -219,11 +157,10 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("imageUri", selectedPost.getImageUri().toString());
         }
 
-        intent.putExtra("birth", selectedPost.getBirth());
+        intent.putExtra("birth", selectedPost.getPosterEmail());
         intent.putExtra("gender", selectedPost.getGender());
         intent.putExtra("contact", selectedPost.getContact());
 
         startActivity(intent);
     }
-
 }
