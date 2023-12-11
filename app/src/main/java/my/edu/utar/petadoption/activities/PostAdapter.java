@@ -1,8 +1,5 @@
 package my.edu.utar.petadoption.activities;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,11 +40,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         holder.titleEt.setText(post.getTitle());
         holder.descriptionEt.setText(post.getContent());
-
+        holder.imageIv.setImageBitmap(post.getBitmap());
         /*Glide.with(holder.itemView.getContext())
                 .load(post.getImageUri())
-                .into(holder.imageIv);*/
-
+                .into(holder.imageIv);
+        holder.imageIv.setImageBitmap(post.getBitmap());
         if (post.getImageUri() != null) {
             try {
                 byte[] bytes = Base64.decode(post.getImageUri(), Base64.DEFAULT);
@@ -57,7 +54,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 Log.e("BitmapDecodeError", "Error decoding bitmap: " + e.getMessage());
                 e.printStackTrace();
             }
-        }
+        }*/
 
         holder.itemView.setOnClickListener(v -> {
            // to access details of the post

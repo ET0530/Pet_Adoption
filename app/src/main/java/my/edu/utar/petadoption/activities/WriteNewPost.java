@@ -46,7 +46,7 @@ public class WriteNewPost extends AppCompatActivity {
     ActivityResultLauncher<Intent> activityLauncher;
     String[] cameraPermissions;
     String[] storagePermissions;
-    EditText titleEt, descriptionEt, birthEt, genderEt, contactEt;
+    EditText titleEt, descriptionEt, emailEt, genderEt, contactEt;
     ImageView imageIv;
     Button uploadBtn;
     Uri imageUri = null;
@@ -78,7 +78,7 @@ public class WriteNewPost extends AppCompatActivity {
         descriptionEt = findViewById(R.id.pDescriptionEt);
         imageIv = findViewById(R.id.pImageIv);
         uploadBtn = findViewById(R.id.pUploadBtn);
-        birthEt = findViewById(R.id.pBirthEt);
+        emailEt = findViewById(R.id.pEmailEt);
         genderEt = findViewById(R.id.pGenderEt);
         contactEt = findViewById(R.id.pContactEt);
 
@@ -115,10 +115,6 @@ public class WriteNewPost extends AppCompatActivity {
     private void setListeners(){
         binding.imageButton3.setOnClickListener(v->{
             Intent intent = new Intent(WriteNewPost.this, MainActivity.class);
-            startActivity(intent);
-        });
-        binding.imageButton3.setOnClickListener(v->{
-            Intent intent = new Intent(WriteNewPost.this, ChatSpace.class);
             startActivity(intent);
         });
         binding.imageButton4.setOnClickListener(v->{
@@ -169,7 +165,7 @@ public class WriteNewPost extends AppCompatActivity {
     private void Posts(){
         post.put(Constants.KEY_POST_TITLE,binding.pTitleEt.getText().toString());
         post.put(Constants.KEY_POST_DESCRIPTIONS, binding.pDescriptionEt.getText().toString());
-        post.put(Constants.KEY_POSTER_EMAIL, binding.pBirthEt.getText().toString());
+        post.put(Constants.KEY_POSTER_EMAIL, binding.pEmailEt.getText().toString());
         post.put(Constants.KEY_POST_GENDER, binding.pGenderEt.getText().toString());
         post.put(Constants.KEY_POSTER_CONTACT, binding.pContactEt.getText().toString());
         post.put(Constants.KEY_POST_IMAGE, encodedImage);

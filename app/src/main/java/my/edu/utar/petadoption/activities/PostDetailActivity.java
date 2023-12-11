@@ -1,7 +1,11 @@
 package my.edu.utar.petadoption.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,14 +13,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-
 import my.edu.utar.petadoption.R;
-import my.edu.utar.petadoption.models.Post;
-import my.edu.utar.petadoption.utilities.Constants;
 
 public class PostDetailActivity extends AppCompatActivity {
 
@@ -31,9 +28,27 @@ public class PostDetailActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        String postId = intent.getStringExtra("postId");
+        Bitmap bitmap=null;
+        String postTitle = intent.getStringExtra("postTitle");
+        String descriptions = intent.getStringExtra("descriptions");
+        String postGender = intent.getStringExtra("postGender");
+        String postImage = intent.getStringExtra("postImage");
+        if (postImage != null) {
+            try {
+                byte[] bytes = Base64.decode(postImage, Base64.DEFAULT);
+                bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            } catch (Exception e) {
+                Log.e("BitmapDecodeError", "Error decoding bitmap: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+        String posterContact = intent.getStringExtra("posterContact");
+        String posterEmail = intent.getStringExtra("posterEmail");
+        String userId = intent.getStringExtra("userId");
+        updateUI(postTitle,descriptions,postGender,bitmap,posterContact,posterEmail,userId);
 
-        if (postId != null) {
+
+        /*if (postId != null) {
 
             DocumentReference postRef = FirebaseFirestore.getInstance().collection(Constants.KEY_COLLECTION_POST).document(postId);
 
@@ -52,28 +67,23 @@ public class PostDetailActivity extends AppCompatActivity {
                     // Handle errors
                 }
             });
-        }
+        }*/
     }
 
-    private void updateUI(Post post) {
+    private void updateUI(String postTitle,String descriptions,String postGender,Bitmap bitmap,String posterContact,String posterEmail, String userId) {
         TextView titleTextView = findViewById(R.id.pTitleEt);
         TextView descriptionTextView = findViewById(R.id.pDescriptionEt);
         ImageView imageView = findViewById(R.id.pImageIv);
-        TextView birthTextView = findViewById(R.id.pBirthEt);
+        TextView emailTextView = findViewById(R.id.pEmailEt);
         TextView genderTextView = findViewById(R.id.pGenderEt);
         TextView contactTextView = findViewById(R.id.pContactEt);
 
-        titleTextView.setText(post.getTitle());
-        descriptionTextView.setText(post.getContent());
-        birthTextView.setText(post.getPosterEmail());
-        genderTextView.setText(post.getGender());
-        contactTextView.setText(post.getContact());
-
-        if (post.getImageUri() != null) {
-            Glide.with(this)
-                    .load(post.getImageUri())
-                    .into(imageView);
-        }
+        titleTextView.setText(postTitle);
+        descriptionTextView.setText(descriptions);
+        emailTextView.setText(posterEmail);
+        genderTextView.setText(postGender);
+        contactTextView.setText(posterContact);
+        imageView.setImageBitmap(bitmap);
     }
 
     @Override

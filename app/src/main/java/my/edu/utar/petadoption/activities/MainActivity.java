@@ -84,10 +84,11 @@ public class MainActivity extends AppCompatActivity {
                             String postTitle = (String) snapshot.get("postTitle");
                             String descriptions = (String) snapshot.get("descriptions");
                             String postImage = (String) snapshot.get("postImage");
+                            String posterEmail = (String) snapshot.get("posterEmail");
                             String postGender = (String) snapshot.get("postGender");
                             String posterContact = (String) snapshot.get("posterContact");
                             String userId = (String) snapshot.get("userId");
-                            Post post = new Post(postTitle, descriptions, postImage,postImage, postGender, posterContact, userId);
+                            Post post = new Post(postTitle, descriptions, postImage,posterEmail, postGender, posterContact, userId);
                             if (post != null) {
                                 posts.add(post);
                                 Log.d("PostDebug", post.toString());
@@ -150,16 +151,16 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, PostDetailActivity.class);
 
-        intent.putExtra("title", selectedPost.getTitle());
-        intent.putExtra("description", selectedPost.getContent());
+        intent.putExtra("postTitle", selectedPost.getTitle());
+        intent.putExtra("descriptions", selectedPost.getContent());
 
-        if (selectedPost.getImageUri() != null) {
-            intent.putExtra("imageUri", selectedPost.getImageUri().toString());
+        if (selectedPost.getBitmap() != null) {
+            intent.putExtra("postImage", selectedPost.getImageUri());
         }
-
-        intent.putExtra("birth", selectedPost.getPosterEmail());
-        intent.putExtra("gender", selectedPost.getGender());
-        intent.putExtra("contact", selectedPost.getContact());
+        intent.putExtra("userId", selectedPost.getUserId());
+        intent.putExtra("posterEmail", selectedPost.getPosterEmail());
+        intent.putExtra("postGender", selectedPost.getGender());
+        intent.putExtra("posterContact", selectedPost.getContact());
 
         startActivity(intent);
     }

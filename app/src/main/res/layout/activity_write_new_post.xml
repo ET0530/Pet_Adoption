@@ -68,23 +68,6 @@
                 android:layout_height="wrap_content" />
 
             <EditText
-                android:id="@+id/pBirthEt"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginLeft="@dimen/_16sdp"
-                android:layout_marginRight="@dimen/_16sdp"
-                android:background="@drawable/rounded_et"
-                android:hint="Enter pet age"
-                android:padding="@dimen/_14sdp"
-                android:singleLine="true"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/barrier3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <EditText
                 android:id="@+id/pGenderEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -93,6 +76,23 @@
                 android:background="@drawable/rounded_et"
                 android:hint="Enter pet gender"
                 android:padding="@dimen/_14sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/barrier3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/pEmailEt"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="@dimen/_16sdp"
+                android:layout_marginRight="@dimen/_16sdp"
+                android:background="@drawable/rounded_et"
+                android:hint="Enter email"
+                android:padding="@dimen/_14sdp"
+                android:singleLine="true"
                 android:textStyle="bold" />
 
             <TextView

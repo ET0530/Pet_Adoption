@@ -1,5 +1,10 @@
 package my.edu.utar.petadoption.models;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+import android.util.Log;
+
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.firestore.Exclude;
 
@@ -17,6 +22,9 @@ public class Post implements Serializable {
     private String posterContact;
     private Object timeStamp;
     private String userId;
+    private Bitmap bitmap;
+
+
     public Post(String postTitle, String descriptions, String postImage, String posterEmail, String postGender, String posterContact,String userID) {
 
         this.postTitle = postTitle;
@@ -27,6 +35,15 @@ public class Post implements Serializable {
         this.posterContact = posterContact;
         this.timeStamp = ServerValue.TIMESTAMP;
         this.userID=userID;
+        if (postImage != null) {
+            try {
+                byte[] bytes = Base64.decode(postImage, Base64.DEFAULT);
+                this.bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            } catch (Exception e) {
+                Log.e("BitmapDecodeError", "Error decoding bitmap: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
     }
 
     public Post(){
@@ -63,8 +80,10 @@ public class Post implements Serializable {
         return postTitle;
     }
     public String getContent() {
-
         return descriptions;
+    }
+    public Bitmap getBitmap() {
+        return bitmap;
     }
 
     @Exclude

@@ -48,16 +48,37 @@
             android:padding="10dp"/>
 
         <TextView
-            android:id="@+id/birthTv"
+            android:id="@+id/genderTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pet Age"
-            android:textStyle="bold"
             android:padding="5dp"
-            android:textSize="25sp"/>
+            android:text="Pet Gender"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/pBirthEt"
+            android:id="@+id/pGenderEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:focusable="false"
+            android:inputType="none"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/emailTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Email"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/pEmailEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -67,27 +88,6 @@
             android:textSize="20sp"
             android:padding="5dp"
             android:singleLine="true" />
-
-        <TextView
-            android:id="@+id/genderTv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Pet Gender"
-            android:textStyle="bold"
-            android:padding="5dp"
-            android:textSize="25sp" />
-
-        <EditText
-            android:id="@+id/pGenderEt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:inputType="none"
-            android:focusable="false"
-            android:layout_marginBottom="8dp"
-            android:textSize="20sp"
-            android:singleLine="true"
-            android:padding="5dp"/>
 
         <TextView
             android:id="@+id/contactTv"
